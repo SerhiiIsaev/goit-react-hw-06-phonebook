@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react';
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from "./Filter/Filter";
 import { ContactList } from "./ContactList/ContactList";
+import { addContact } from 'Redux/Store';
+import { useSelector, useDispatch } from "react-redux";
 
 export const App = () => {
   const [contacts, setContacts] = useState(()=> JSON.parse(localStorage.getItem('contactsList')) ?? [] );
   const [filter, setFilter] = useState('');
+  const dispatch = useDispatch()
 
   const onFilterChange = (e) => {
     setFilter(e.target.value)
@@ -16,7 +19,7 @@ export const App = () => {
     return contacts.filter(({name}) => name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
   }
 
-  const addContact = (contact) => {
+  const addddContact = (contact) => {
     
     const chekContact = contacts.filter(item => item.name.toLocaleLowerCase() === contact.name.toLocaleLowerCase())
     if (chekContact.length > 0) {
@@ -36,7 +39,10 @@ export const App = () => {
         name: e.target.name.value,
         number: e.target.number.value,
     }
-    addContact(contact)
+    addddContact(contact)
+    const action = addContact(contact)
+    console.log(action)
+    dispatch(action)
     e.target.number.value = '';
     e.target.name.value = '';
   }

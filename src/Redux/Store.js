@@ -7,25 +7,38 @@ const contactsSlice = createSlice({
     reducers:{
         addContact: {
             reducer: (state, { payload }) => {
-                const chekContact = state.filter(item => item.name.toLocaleLowerCase() === data.name.toLocaleLowerCase())
+                console.log('Hi')
+                const chekContact = state.filter(item => item.name.toLocaleLowerCase() === payload.name.toLocaleLowerCase())
+                const contactItem = {}
                 if (chekContact.length > 0) {
-                    return alert(`${data.name} is already in contacts`)
+                    return alert(`${payload.name} is already in contacts`)
                 } else {
                     return {
-                        payload: {
+                        contactItem: {
                            id: nanoid(),
-                            ...data 
+                            ...payload 
                         }
                     }
                 }
-                state.push(payload)
+                state.push(contactItem)
+                console.log(state)
             },
             
         }
     }
 })
+const contactsReducer = contactsSlice.reducer;
+// const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const contact = {
+//         name: e.target.name.value,
+//         number: e.target.number.value,
+//     }
+//     const action = addContact(contact)
 
-
+//     e.target.number.value = '';
+//     e.target.name.value = '';
+//   }
 
 export const store = configureStore({
     reducer: {
@@ -34,3 +47,5 @@ export const store = configureStore({
     }
   
 })
+
+export const {addContact} = contactsSlice.actions
