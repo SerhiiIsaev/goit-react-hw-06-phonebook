@@ -40,9 +40,7 @@ export const App = () => {
         number: e.target.number.value,
     }
     addddContact(contact)
-    const action = addContact(contact)
-    console.log(action)
-    dispatch(action)
+    dispatch(addContact(contact))
     e.target.number.value = '';
     e.target.name.value = '';
   }

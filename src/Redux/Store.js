@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit"
+import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit"
 import { nanoid } from 'nanoid'
 
 const contactsSlice = createSlice({
@@ -40,10 +40,14 @@ const contactsReducer = contactsSlice.reducer;
 //     e.target.name.value = '';
 //   }
 
+const reducers = combineReducers({
+  contacts: contactsSlice.reducer,
+
+});
+
 export const store = configureStore({
     reducer: {
-        contacts: contactsSlice,
-        filter: ""
+        contacts: contactsSlice.reducer
     }
   
 })
