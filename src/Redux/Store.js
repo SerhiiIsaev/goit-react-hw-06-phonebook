@@ -1,54 +1,40 @@
-import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit"
-import { nanoid } from 'nanoid'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const contactsSlice = createSlice({
-    name: 'contacts',
-    initialstate: [],
-    reducers:{
-        addContact: {
-            reducer: (state, { payload }) => {
-                console.log('Hi')
-                const chekContact = state.filter(item => item.name.toLocaleLowerCase() === payload.name.toLocaleLowerCase())
-                const contactItem = {}
-                if (chekContact.length > 0) {
-                    return alert(`${payload.name} is already in contacts`)
-                } else {
-                    return {
-                        contactItem: {
-                           id: nanoid(),
-                            ...payload 
-                        }
-                    }
-                }
-                return state.push(contactItem)
-            },
-            
-        }
-    }
-})
-const contactsReducer = contactsSlice.reducer;
-// const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const contact = {
-//         name: e.target.name.value,
-//         number: e.target.number.value,
-//     }
-//     const action = addContact(contact)
+import { filterSlice } from './filterSlice';
+import { contactsSlice } from './contactsSlice';
 
-//     e.target.number.value = '';
-//     e.target.name.value = '';
-//   }
+const persistConfig = {
+  key: 'contacts',
+  storage,
+  blacklist: ['filter'],
+};
 
-// const reducers = combineReducers({
-//   contacts: contactsSlice,
+const reducers = combineReducers({
+  contacts: contactsSlice.reducer,
+  filter: filterSlice.reducer,
+});
 
-// });
+const contactsPersistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-    reducer: {
-        contacts: contactsSlice,
-    }
-  
-})
+  reducer: contactsPersistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
-export const {addContact} = contactsSlice.actions
+export const persistor = persistStore(store);
