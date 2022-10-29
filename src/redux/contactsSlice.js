@@ -9,7 +9,7 @@ export const contactsSlice = createSlice({
       return state.filter(item => item.id !== action.payload);
     },
     addContact(state, action) {
-      state.unshift({ id: nanoid(), ...action.payload });
+      state.push({ id: nanoid(), ...action.payload });
     },
   },
 });
