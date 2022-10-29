@@ -20,8 +20,7 @@ const contactsSlice = createSlice({
                         }
                     }
                 }
-                state.push(contactItem)
-                console.log(state)
+                return state.push(contactItem)
             },
             
         }
@@ -40,14 +39,14 @@ const contactsReducer = contactsSlice.reducer;
 //     e.target.name.value = '';
 //   }
 
-const reducers = combineReducers({
-  contacts: contactsSlice.reducer,
+// const reducers = combineReducers({
+//   contacts: contactsSlice,
 
-});
+// });
 
 export const store = configureStore({
     reducer: {
-        contacts: contactsSlice.reducer
+        contacts: contactsSlice,
     }
   
 })
