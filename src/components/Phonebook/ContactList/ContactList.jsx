@@ -18,7 +18,7 @@ export const ContactList = () => {
 
     const contactsToRender = getFilteredContacts()
 
-    return <ul>
+    return <ul style={{ paddingLeft: "0px" }}>
         {contactsToRender.map(item =>
             <ContactItem key={item.id} data={item} />)
         }

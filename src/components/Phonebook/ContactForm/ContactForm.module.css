@@ -5,7 +5,7 @@
     width: 300px;
     padding: 10px;
     margin-bottom: 20px;
-    border: 2px solid lightblue;
+    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -18,16 +18,12 @@
     height: 20px;
     margin-bottom: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    border-color: lightblue;
-    background-color: azure;
 }
 
 .button {
     align-self: center;
     padding: 5px;
-    background-color: lightblue;
-    border-color: transparent;
+    background-color: darkgray;
     border-radius: 5px;
 }
 
